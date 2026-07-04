@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Application Form</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body{
+            background: linear-gradient(to right, #c1c7cd, #cfdadb);
+            display: flex;
+            justify-content: center;
+           align-items: center;
+            min-height : 100vh;
+            padding: 20px;
+        }
+
+        .container{
+            background: white;
+            width: 500px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+        }
+
+        h1{
+            text-align: center;
+            color: #0077b6;
+            margin-bottom: 20px;
+        }
+
+        hr{
+            margin-bottom: 20px;
+        }
+
+        label{
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        textarea,
+        select{
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus{
+            border-color: #0077b6;
+            box-shadow: 0 0 5px #0077b6;
+        }
+
+        .gender,
+        .course{
+            margin-bottom: 15px;
+        }
+
+        .gender input,
+        .course input{
+            width: auto;
+            margin-right: 8px;
+        }
+
+        button{
+            width: 5cqw;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn{
+            background: #0077b6;
+            color: white;
+        }
+
+        .submit-btn:hover{
+            background: #023e8a;
+        }
+
+        .reset-btn{
+            background: #ff595e;
+            color: white;
+        }
+
+        .reset-btn:hover{
+            background: #d90429;
+        }
+
+        .btn-group{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Student Application Form</h1>
+        <hr>
+
+        <form id="studentForm">
+<input type="text" name="studentName" placeholder="Enter your name">
+
+<input type="text" name="regNo" placeholder="Enter your registration ID">
+
+<input type="text" name="fatherName" placeholder="Enter your father name">
+
+<input type="text" name="motherName" placeholder="Enter your mother name">
+
+<input type="date" name="dob">
+
+<input type="tel" name="mobile" placeholder="Enter your mobile number">
+
+<input type="tel" name="altMobile" placeholder="Enter alternative number">
+
+<input type="email" name="email" placeholder="Enter your email">
+
+<input type="password" name="password" placeholder="Enter your password">
+
+           <div class="gender">
+<p><b>Gender:</b></p>
+
+<input type="radio" name="gender" value="Male"> Male
+
+<input type="radio" name="gender" value="Female"> Female
+
+</div>
+ <div class="course">
+
+<p><b>Select Course:</b></p>
+
+<input type="checkbox" name="course" value="HTML"> HTML <br>
+
+<input type="checkbox" name="course" value="CSS"> CSS <br>
+
+<input type="checkbox" name="course" value="AIML"> AIML <br>
+
+<input type="checkbox" name="course" value="DBMS"> DBMS
+
+</div>          
+<textarea name="address" rows="4" placeholder="Enter your address"></textarea>
+
+            <label>Choose Programming Language:</label>
+           <select name="language">
+<option>Python</option>
+
+<option>CSS</option>
+
+<option>AIML</option>
+
+<option>Salesforce</option>
+
+</select>
+            <label>Upload Your Photo:</label>
+            <input type="file">
+            <div class="btn-group">
+        
+                <button type="submit" class="submit-btn" value="submit-btn">Submit</button>
+                <button type="reset" class="reset-btn">Reset</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+<script>
+
+document.getElementById("studentForm").addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const form=this;
+
+const data={
+
+studentName:form.studentName.value,
+
+regNo:form.regNo.value,
+
+fatherName:form.fatherName.value,
+
+motherName:form.motherName.value,
+
+dob:form.dob.value,
+
+mobile:form.mobile.value,
+
+altMobile:form.altMobile.value,
+
+email:form.email.value,
+
+password:form.password.value,
+
+gender:document.querySelector('input[name="gender"]:checked')?.value,
+
+course:[...document.querySelectorAll('input[name="course"]:checked')].map(c=>c.value),
+
+address:form.address.value,
+
+language:form.language.value
+
+};
+
+const response=await fetch("/register",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify(data)
+
+});
+
+const result=await response.json();
+
+alert(result.message);
+
+if(result.success){
+
+form.reset();
+
+}
+
+});
+
+</script>
+</html>
